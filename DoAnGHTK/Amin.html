@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin</title>
+  
+  <!-- Thêm Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-database-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
+
+  <form id="searchForm">
+    <input type="text" id="searchInput" placeholder="Nhập thông tin tìm kiếm...">
+    <button type="button" onclick="searchUser()">Tìm kiếm</button>
+  </form>
+  <style>
+    
+    
+    #userOrdersList {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    max-height: 200px; /* Giới hạn chiều cao của danh sách người dùng */
+    overflow-y: auto; /* Thêm thanh cuộn nếu danh sách quá dài */
+  }
+  </style>
+  <style>
+ #userList {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    max-height: 400px; /* Giới hạn chiều cao của danh sách người dùng */
+    overflow-y: auto; /* Thêm thanh cuộn nếu danh sách quá dài */
+  }
+
+
+    body {
+  background-color: #837b86; /* Màu nền cho body */
+}
+
+    /* Định dạng cho hình ảnh */
+    .orderImage {
+      max-width: 100%; /* Đặt kích thước tối đa cho hình ảnh là 100% chiều rộng của phần tử chứa */
+      height: auto; /* Đảm bảo tỷ lệ khung hình ảnh tự động được duy trì */
+      display: block; /* Hiển thị hình ảnh như một block element */
+      margin: 10px auto; /* Canh giữa hình ảnh */
+    }
+    /* Định dạng cho form và các label */
+    #editOrderForm {
+      max-width: 600px; /* Đặt chiều rộng tối đa của form */
+      margin: 0 auto; /* Canh giữa form */
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background-color: #f9f9f9;
+    }
+
+    #editOrderForm label {
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    #editOrderForm input[type="text"] {
+      width: calc(100% - 12px);
+      padding: 6px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+    #editOrderForm button {
+      padding: 8px 16px;
+      border-radius: 4px;
+      border: none;
+      background-color: #007bff;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    #editOrderForm button:hover {
+      background-color: #0056b3;
+    }
+
+    #overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 1;
+      display: none;
+    }
+  </style>
+  <style>
+    /* CSS cho danh sách người dùng */
+    .userList {
+      background-color: #ffd700; /* Màu nền cho danh sách người dùng */
+      padding: 10px;
+      border-radius: 8px;
+    }
+  
+    /* CSS cho danh sách đơn hàng của người dùng */
+    .userOrdersList {
+      background-color: #00ff00; /* Màu nền cho danh sách đơn hàng của người dùng */
+      padding: 10px;
+      border-radius: 8px;
+    }
+
+    /* CSS cho ô nhập và nút tìm kiếm */
+#searchForm {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+#searchInput {
+  padding: 10px;
+  border: none;
+  border-radius: 5px 0 0 5px;
+  font-size: 16px;
+}
+
+#searchForm button {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 0 5px 5px 0;
+  background-color: #e60000; /* Đổi màu nút thành đỏ (#e60000) */
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#searchForm button:hover {
+  background-color: #cc0000; /* Màu đỏ khi hover */
+  color: #fff;
+  
+}
+  </style>
+  <style>
+    h1 {
+  color: #dbc8c8; /* Đổi màu chữ thành màu đỏ (#ff0000) */
+}
+/* CSS cho nút "Xem đơn hàng" */
+button {
+  padding: 8px 16px;
+  border-radius: 4px; 
+  border: 7px solid #060707; /* Thêm viền */
+  background-color: #a9da74;
+  color: #0b0303;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; /* Thêm transition cho màu viền */
+}
+
+button:hover {
+  background-color: #ffcc00;
+  color: #333;
+  border-color: #090909; /* Đổi màu viền khi hover */
+  font-weight: bold;
+}
+
+
+/* CSS cho ô nhập và nút tìm kiếm */
+#searchForm {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+#searchInput {
+  padding: 10px;
+  border: none;
+  border-radius: 5px 0 0 5px;
+  font-size: 16px;
+}
+
+#searchForm button {
+  background-color: rgb(74, 165, 182); /* Thay đổi màu nền thành đỏ */
+  font-weight: bold; /* Chữ in đậm */
+  color: black; /* Màu chữ */
+    /* Đổ bóng */
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Đổ bóng với x-offset, y-offset, blur-radius và màu */
+  /* Các thuộc tính khác tùy ý */
+}
+
+#searchForm button:hover {
+  background-color: #070703; /* Màu đỏ khi hover */
+  color: #fff;
+
+}
+  </style>
+</head>
+<body>
+  
+  <h1>Danh sách người dùng</h1>
+  <ul id="userList">
+    <!-- Danh sách người dùng sẽ được hiển thị ở đây -->
+  </ul>
+
+
+  <h1>Danh sách đơn hàng</h1>
+  <ul id="userOrdersList">
+    <!-- Danh sách đơn hàng của người dùng sẽ được hiển thị ở đây -->
+  </ul>
+<style>
+  /* CSS cho danh sách người dùng */
+  #userList {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+#userList li {
+  margin-bottom: 5px; /* Giảm khoảng cách giữa các mục */
+  padding: 10px; /* Giảm kích thước padding để tạo khung vừa hơn */
+  background-color: #f3f3f3;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+}
+
+#userList li:hover {
+  transform: translateY(-3px); /* Giảm độ dịch chuyển khi hover */
+  background-color: #afa1ae;
+}
+
+#userOrdersList {
+  list-style-type: none; /* Loại bỏ chấm đầu dòng của mục danh sách */
+  padding: 0; /* Xóa padding mặc định */
+}
+#userOrdersList li {
+  margin-bottom: 8px; /* Khoảng cách giữa các mục */
+  background-color: #f2f2f2; /* Màu nền của mỗi mục */
+  padding: 10px; /* Khoảng cách bên trong mỗi mục */
+  border-radius: 5px; /* Bo tròn viền của mỗi mục */
+}
+
+</style>
+  <form id="editOrderForm">
+    
+    <label for="orderStatus">Trạng thái đơn hàng:</label>
+<select id="orderStatus" onchange="updateOrderStatus()">
+  <option value="nhận">Đơn hàng đã được nhận bởi kho</option>
+  <option value="vận chuyển">Đơn hàng đang được vận chuyển</option>
+  <option value="giao thành công">Đơn hàng đã được giao thành công</option>
+  <option value="giao thất bại">Đơn hàng đã giao thất bại phí hoàn 15k </option>
+</select>
+<button  type="button" onclick="saveOrderStatus()">Lưu trạng thái</button>
+
+    <label for="orderId">ID Đơn hàng:</label><br>
+    <input type="text" id="orderId" name="orderId" readonly><br>
+     
+     <label for="customerName">Tên khách hàng:</label><br>
+     <input type="text" id="customerName" name="customerName" ><br>
+     
+     <label for="phoneNumber">Số điện thoại:</label><br>
+     <input type="text" id="phoneNumber" name="phoneNumber" ><br>
+     
+     <label for="address">Địa chỉ:</label><br>
+     <input type="text" id="address" name="address" ><br>
+     
+     <label for="productName">Tên sản phẩm:</label><br>
+     <input type="text" id="productName" name="productName" ><br>
+     
+     <img id="orderImage" src="" alt="Hình ảnh đơn hàng" class="orderImage">
+     <div id="overlay"></div>
+
+     <label for="productPrice">Giá sản phẩm:</label><br>
+     <input type="text" id="productPrice" name="productPrice" ><br>
+     
+     <label for="productQuantity">Số lượng:</label><br>
+     <input type="text" id="productQuantity" name="productQuantity" ><br>
+     
+     <label for="productWeight">Trọng lượng:</label><br>
+     <input type="text" id="productWeight" name="productWeight" ><br>
+     
+     <label for="shippingFeeType">Loại phí vận chuyển:</label><br>
+     <input type="text" id="shippingFeeType" name="shippingFeeType" ><br><br>
+     
+     <button type="button" onclick="updateOrder()">Cập nhật thông tin đơn hàng</button>
+    
+   </form>
+
+  <!-- JavaScript -->
+  <script>
+    // Khởi tạo Firebase App
+    const firebaseConfig = {
+      apiKey: "AIzaSyAD3paI--G69OCHeEGD_UrBoM806pF04WA",
+      authDomain: "herroo.firebaseapp.com",
+      databaseURL: "https://herroo-default-rtdb.firebaseio.com",
+      projectId: "herroo",
+      storageBucket: "herroo.appspot.com",
+      messagingSenderId: "435793472033",
+      appId: "1:435793472033:web:e3ad604b7f5a1c44fcd160",
+      measurementId: "G-WN4E04H4N6"
+    };
+    
+    firebase.initializeApp(firebaseConfig);
+
+
+    firebase.auth().onAuthStateChanged((user) => {
+  if (user) {
+    // Kiểm tra xem người dùng đã đăng nhập có là admin không
+    firebase.database().ref('Admin').child(user.uid).once('value')
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          // Người dùng là admin, có quyền truy cập vào UsersAuthList
+          displayUserList();
+        } else {
+          console.error("Người dùng không phải là admin");
+        }
+      })
+      .catch((error) => {
+        console.error("Lỗi khi kiểm tra quyền admin: ", error);
+      });
+  } else {
+    console.error("Người dùng chưa đăng nhập");
+  }
+});
+
+function displayUserList() {
+  const usersRef = firebase.database().ref('UsersAuthList');
+  usersRef.once('value')
+    .then((snapshot) => {
+      // Hiển thị danh sách người dùng
+      snapshot.forEach((childSnapshot) => {
+        // Xử lý và hiển thị thông tin người dùng ở đây
+      });
+    })
+    .catch((error) => {
+      console.error("Lỗi khi lấy danh sách người dùng: ", error);
+    });
+}
+    // Tham chiếu đến UsersAuthList trong Realtime Database
+    const usersRef = firebase.database().ref('UsersAuthList');
+
+    // Lấy dữ liệu người dùng từ Realtime Database
+    usersRef.once('value')
+      .then((snapshot) => {
+        const userList = document.getElementById('userList');
+
+        snapshot.forEach((childSnapshot) => {
+          const userData = childSnapshot.val();
+          const userId = childSnapshot.key;
+
+          // Tạo các phần tử HTML để hiển thị thông tin người dùng
+          const listItem = document.createElement('li');
+          listItem.innerHTML = `
+            <strong>User ID:</strong> ${userId} <br>
+            <strong>Email:</strong> ${userData.email} <br>
+            <strong>First Name:</strong> ${userData.firstName} <br>
+            <strong>Last Name:</strong> ${userData.lastName} <br>
+            <strong>Phone:</strong> ${userData.phone} <br>  
+            <button onclick="showUserOrders('${userId}')">Xem đơn hàng</button> <!-- Thêm button để xem đơn hàng -->
+            
+            <hr>
+          `;
+          userList.appendChild(listItem);
+        });
+      })
+      .catch((error) => {
+        console.error("Lỗi khi lấy danh sách người dùng: ", error);
+      });
+
+    // Function để hiển thị đơn hàng của người dùng khi nhấp vào tên người dùng
+
+
+    function showUserOrders(userId) {
+  const userOrdersRef = firebase.database().ref('orders').orderByChild('userID').equalTo(userId);
+  const userOrdersList = document.getElementById('userOrdersList');
+
+  userOrdersRef.once('value')
+    .then((snapshot) => {
+      const userOrders = snapshot.val();
+      userOrdersList.innerHTML = '';
+
+      if (userOrders) {
+        Object.keys(userOrders).forEach((orderId) => {
+          const orderData = userOrders[orderId];
+          const listItem = document.createElement('li');
+          const createdDate = new Date(orderData.created_at).toLocaleString(); // Lấy thời gian tạo đơn hàng
+
+          listItem.innerHTML = `
+            <strong>Order ID:</strong> ${orderId} <br>
+            <strong>Created At:</strong> ${createdDate} <br> <!-- Hiển thị thời gian tạo đơn hàng -->
+            <button onclick="deleteOrder('${orderId}')">Xóa đơn hàng</button>
+          `;
+
+          const viewOrderButton = document.createElement('button');
+          viewOrderButton.textContent = "Xem thông tin";
+          viewOrderButton.onclick = function() {
+            showOrderDetails(orderId);
+          };
+          listItem.appendChild(viewOrderButton);
+
+          userOrdersList.appendChild(listItem);
+        });
+      } else {
+        const listItem = document.createElement('li');
+        listItem.textContent = "Không có đơn hàng nào cho người dùng này.";
+        userOrdersList.appendChild(listItem);
+      }
+    })
+    .catch((error) => {
+      console.error("Lỗi khi lấy thông tin đơn hàng của người dùng: ", error);
+    });
+}
+
+
+function showOrderDetails(orderId) {
+const orderRef = firebase.database().ref(`orders/${orderId}`);
+
+orderRef.once('value')
+  .then((snapshot) => {
+    const orderData = snapshot.val();
+    if (orderData) {
+      document.getElementById('orderId').value = orderId;
+      document.getElementById('customerName').value = orderData.customerName;
+      document.getElementById('phoneNumber').value = orderData.phoneNumber;
+      document.getElementById('address').value = orderData.address;
+      document.getElementById('productName').value = orderData.productName;
+      document.getElementById('orderImage').src = orderData.productImage;
+      document.getElementById('productPrice').value = orderData.productPrice;
+      document.getElementById('productQuantity').value = orderData.productQuantity;
+      document.getElementById('productWeight').value = orderData.productWeight;
+      document.getElementById('shippingFeeType').value = orderData.shippingFeeType;
+      
+    } else {
+      console.log("Không tìm thấy thông tin đơn hàng.");
+    }
+  })
+  .catch((error) => {
+    console.error("Lỗi khi lấy thông tin đơn hàng: ", error);
+  });
+}
+
+
+function updateOrder() {
+const orderId = document.getElementById('orderId').value;
+
+
+// Kiểm tra xem các trường bắt buộc có được điền đầy đủ không
+if (customerName === '' || phoneNumber === '' /* Thêm các điều kiện kiểm tra khác ở đây */) {
+    alert('Vui lòng điền đầy đủ thông tin đơn hàng.');
+    return; // Dừng việc cập nhật nếu có trường không được điền
+  }
+// Lấy thông tin cần cập nhật từ form
+const updatedData = {
+  customerName: document.getElementById('customerName').value,
+  phoneNumber: document.getElementById('phoneNumber').value,
+  address: document.getElementById('address').value,
+  productName: document.getElementById('productName').value,
+  productPrice: document.getElementById('productPrice').value,
+  productQuantity: document.getElementById('productQuantity').value,
+  productWeight: document.getElementById('productWeight').value,
+  shippingFeeType: document.getElementById('shippingFeeType').value,
+  // Thêm các trường dữ liệu khác cần cập nhật ở đây
+};
+
+const orderRef = firebase.database().ref(`orders/${orderId}`);
+
+// Sử dụng .update() để cập nhật thông tin đơn hàng
+orderRef.update(updatedData)
+  .then(() => {
+    alert("Successful");
+    console.log("Thông tin đơn hàng đã được cập nhật.");
+  })
+  .catch((error) => {
+    console.error("Lỗi khi cập nhật thông tin đơn hàng: ", error);
+  });
+}
+
+// Function để tìm kiếm người dùng khi nhập số điện thoại và nhấn nút Tìm kiếm
+function searchUser() {
+  const searchInput = document.getElementById('searchInput').value;
+  
+  // Thực hiện truy vấn tìm kiếm người dùng theo số điện thoại
+  const usersRef = firebase.database().ref('UsersAuthList');
+  usersRef.orderByChild('phone').equalTo(searchInput).once('value')
+    .then((snapshot) => {
+      // Xử lý kết quả tìm kiếm
+      const userList = document.getElementById('userList');
+      userList.innerHTML = ''; // Xóa danh sách người dùng hiện tại
+
+      snapshot.forEach((childSnapshot) => {
+        const userData = childSnapshot.val();
+        const userId = childSnapshot.key;
+
+        // Tạo các phần tử HTML để hiển thị thông tin người dùng
+        const listItem = document.createElement('li');
+        listItem.innerHTML = `
+          <strong>User ID:</strong> ${userId} <br>
+          <strong>Email:</strong> ${userData.email} <br>
+          <strong>First Name:</strong> ${userData.firstName} <br>
+          <strong>Last Name:</strong> ${userData.lastName} <br>
+          <strong>Phone:</strong> ${userData.phone} <br>  
+          <button onclick="showUserOrders('${userId}')">Xem đơn hàng</button> <!-- Thêm button để xem đơn hàng -->
+          <hr>
+        `;
+        userList.appendChild(listItem);
+      });
+    })
+    .catch((error) => {
+      console.error("Lỗi khi tìm kiếm người dùng: ", error);
+    });
+}
+
+function deleteOrder(orderId) {
+  const orderRef = firebase.database().ref('orders').child(orderId);
+
+  orderRef.remove()
+    .then(() => {
+      alert('Đơn hàng đã được xóa thành công.');
+      // Sau khi xóa thành công, có thể làm gì đó, ví dụ: cập nhật giao diện người dùng
+    })
+    .catch((error) => {
+      console.error('Lỗi khi xóa đơn hàng:', error);
+    }); 
+}
+function saveOrderStatus() {
+  const orderId = document.getElementById('orderId').value;
+  const orderStatusElement = document.getElementById('orderStatus');
+const selectedIndex = orderStatusElement.selectedIndex;
+const orderStatus = orderStatusElement.options[selectedIndex].text;
+
+  
+  const orderRef = firebase.database().ref(`orders/${orderId}`);
+  orderRef.update({ status: orderStatus })
+    .then(() => {
+      alert("Trạng thái đơn hàng đã được cập nhật.");
+      // Cập nhật giao diện hoặc thực hiện các hành động khác nếu cần
+    })
+    .catch((error) => {
+      console.error("Lỗi khi cập nhật trạng thái đơn hàng: ", error);
+    });
+}
+
+  </script>
+</body>
+</html>

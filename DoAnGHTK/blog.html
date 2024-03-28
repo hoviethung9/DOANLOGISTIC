@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+  <style>
+    #map {
+      width: 100%; /* Chiều rộng của bản đồ */
+      height: 300px ; /* Chiều cao của bản đồ */
+      max-width: 30%; /* Kích thước tối đa cho phép mở rộng */
+      overflow: auto; /* Tạo thanh cuộn nếu nội dung vượt quá kích thước */
+      
+    }.leaflet-routing-container {
+    display: none;
+}
+
+#toggleFullscreen {
+  font-size: 20px; /* Điều chỉnh kích thước chữ */
+  padding: 10px 16px; /* Điều chỉnh padding để làm nút nhỏ hơn */
+  position: absolute; /* Đặt vị trí tuyệt đối */
+  top: 50px; /* Khoảng cách từ trên xuống */
+  left: 50px; /* Khoảng cách từ trái sang phải */
+  z-index: 9999; /* Chỉ số z để nút hiển thị phía trên các phần tử khác */
+  white-space: nowrap; /* Ngăn chặn việc xuống dòng tự động */
+  max-width: 200px; /* Giới hạn chiều rộng tối đa */
+  width: auto; /* Tự động điều chỉnh chiều rộng theo nội dung */
+}
+
+
+  </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="plugins/bootstrap/bootstrap.min.css">
+
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+
+  <link rel="stylesheet" href="plugins/animate/animate.min.css">
+
+  <link rel="stylesheet" href="plugins/fontawesome/all.css">
+
+  <link href="plugins/webfonts/font.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="plugins/owl.carousel/owl.carousel.min.css" type="text/css">
+
+  <link rel="stylesheet" href="plugins/owl.carousel/owl.theme.default.min.css">
+
+  <!-- UIkit CSS -->
+
+  <link rel="stylesheet" href="plugins/uikit/uikit.min.css" />
+
+  <title>Đơn Đã Đặt</title>
+
+</head>
+
+<body>
+
+  <!--Navbar-->
+
+  <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top">
+
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <img src="images/GHTK.png" class="logo-top" alt="">
+      </a>
+      <div class="desk-menu collapse navbar-collapse justify-content-md-center" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item ">
+            <a class="nav-link" href="index.html">Trang Chủ</a>
+          </li>
+          <li class="nav-item lisanpham">
+            <a class="nav-link" href="Lichsudonhang.html">Lịch Sử</a>   
+          </li>
+          <li class="nav-item lisanpham">
+            <a class="nav-link" href="introduce.html">Thông Tin
+              <i class="fa fa-chevron-down" aria-hidden="true"></i>
+            </a>
+            <ul class="sub_menu">
+              <li class="">
+                <a href="introduce.html" title="Thông Tin Dịch Vụ">
+                  Thông Tin Dịch Vụ
+                </a>
+              </li>
+              <li class="">
+                <a href="product.html" title="Thông Tin Khách Hàng">
+                  Thông Tin Khách Hàng
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="blog.html">Đơn Hàng</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="Contact.html">Liên Hệ</a>
+          </li>
+        </ul>
+      </div>
+      <div id="offcanvas-flip1" uk-offcanvas="flip: true; overlay: true">
+        <div class="uk-offcanvas-bar" style="background: white;
+        width: 100%;">
+
+          <button class="uk-offcanvas-close" style="color:#272727" type="button" uk-close></button>
+          <h3 style="font-size: 14px;
+          color: #272727;
+          text-transform: uppercase;
+          margin: 3px 0 30px 0;
+          font-weight: 500; letter-spacing: 2px;">MENU</h3>
+            <div class="justify-content-md-center">
+              <ul class="navbar-nav">
+                <li class="nav-item">
+                  <a class="nav-link" href="index.html">Trang Chủ</a>
+                </li>
+            
+                <li class="nav-item lisanpham">
+                  <a class="nav-link" href="Lichsudonhang.html">Lịch Sử</a>
+                  
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle aaaa" href="#" id="navbarDropdown" role="button"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <p>Thông Tin</p>
+                    <i class="fa fa-angle-double-right"></i>
+  
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="border:0;">
+                    <a class="dropdown-item" href="Lichsudonhang.html" title="Thông Tin Dịch Vụ">Thông Tin Dịch Vụ</a>
+                    <a class="dropdown-item" href="product.html" title="SThông Tin Khách Hàng">Thông Tin Khách Hàng</a>
+                  </div>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="blog.html">Đơn Hàng</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="Contact.html">Liên Hệ</a>
+                </li>
+              </ul>
+            </div>
+        </div>
+      </div>
+      <div id="offcanvas-flip" uk-offcanvas="flip: true; overlay: true">
+        <div class="uk-offcanvas-bar" style="background: white; width: 350px;">
+          <button class="uk-offcanvas-close" style="color: #272727" type="button" uk-close></button>
+          <h3 style="font-size: 14px; color: #272727; text-transform: uppercase; margin: 3px 0 30px 0; font-weight: 500; letter-spacing: 2px;">Tìm kiếm</h3>
+          <div class="search-box wpo-wrapper-search">
+              <form action="search" class="searchform searchform-categoris ultimate-search">
+                  <div class="wpo-search-inner" style="display:inline">
+                      <input type="hidden" name="type" value="product">
+                      <input required="" id="inputSearchAuto" name="q" maxlength="40" autocomplete="off" class="searchinput input-search search-input" type="text" size="20" placeholder="Tìm kiếm sản phẩm...">
+                  </div>
+                  <button type="submit" class="btn-search btn" id="search-header-btn">
+                      <i style="font-weight:bold" class="fas fa-search"></i>
+                  </button>
+              </form>
+              <div id="ajaxSearchResults" class="smart-search-wrapper ajaxSearchResults" style="display: none">
+                  <div class="resultsContent"></div>
+              </div>
+          </div>
+      </div>
+    </div>
+  </nav>
+  <!--Map-->
+  
+  
+ <div>
+  <div id="map" style="float: left;"></div>
+  <button id="toggleFullscreen" style="float: left;">Màn hình đầy đủ</button>
+ </div>
+  
+    <!-- API -->
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script> 
+  <script src="https://cdn.jsdelivr.net/npm/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.min.js"></script>
+
+  <div class="breadcrumb-shop">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 pd5">
+          <ol class="breadcrumb breadcrumb-arrows">
+            <li>
+              <a href="index.html">
+                <span>Trang chủ</span>
+              </a>
+            </li>
+            <li>
+              <span><span style="color: #777777">Đơn Đặt Hàng</span></span>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--List Prodct-->
+  <div class="container">
+    <form id="Mainform" class="w-100 m-4">
+        <!-- Your form code goes here -->
+        <label for="customerName">Tên Người Nhận</label>
+        <input type="text" id="customerName" name="customerName">
+
+        <label for="phoneNumber">Số điện thoại:</label>
+        <input type="tel" id="phoneNumber" name="phoneNumber">
+
+
+        <div>
+          <label for="inputAddressB">Địa Chỉ người gữi:</label>
+          <input type="text" id="inputAddressA" name="inputAddressA">
+          <label for="inputAddressB">Địa Chỉ người nhận:</label>
+          <input type="text" id="inputAddressB" name="inputAddressB">
+          <button type="button" id="calculateRouteButton" class="btn btn-primary">Tính đường đi</button>
+        </div>
+        
+        <label for="shippingFee">Phí vận chuyển:</label>
+<span id="shippingFeeDisplay"></span>
+
+        <select id="khoiluong" name="khoiluong" required>
+            <option value="tren20gk">Trên 20kg</option>
+            <option value="duoi20kg"> Dưới 20kg</option>
+        </select> <br>
+
+        <label for="deliveryType">Loại vận chuyển:</label>
+        <select id="deliveryType" name="deliveryType" required>
+            <option value="tannoi">Lấy hàng tận nơi</option>
+            <option value="guicuc">Gửi hàng tại bưu cục</option>
+        </select>
+
+        <label for="productName">Tên sản phẩm:</label>
+        <input type="text" id="productName" name="productName" required>
+
+        <label for="productImage">Hình ảnh sản phẩm:</label>
+        <input type="file" id="productImage" name="productImage" accept="image/*" required>
+
+        <label for="productPrice">Giá bán sản phẩm:</label>
+        <input type="text" id="productPrice" name="productPrice" required>
+
+        <label for="productQuantity">Số lượng sản phẩm:</label>
+        <input type="number" id="productQuantity" name="productQuantity" required>
+
+        <label for="productWeight">Khối lượng sản phẩm (kg):</label>
+        <input type="number" id="productWeight" name="productWeight" required>
+
+        <label for="shippingFeeType">Phí vận chuyển:</label>
+        <select id="shippingFeeType" name="shippingFeeType" required>
+            <option value="khachtra">Khách hàng trả</option>
+            <option value="nguoiguitra">Người gửi trả</option>
+        </select>
+
+        <label for="codFee">Phí thu hộ:</label>
+        <input type="text" id="codFee" name="codFee">
+
+        <button type="submit" class="btn btn-success" style="float: right;">Gửi đơn hàng</button>
+    </form>
+
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-storage-compat.js"></script>
+    
+    <script>
+      const firebaseConfig = {
+    apiKey: "AIzaSyAD3paI--G69OCHeEGD_UrBoM806pF04WA",
+    authDomain: "herroo.firebaseapp.com",
+    databaseURL: "https://herroo-default-rtdb.firebaseio.com",
+    projectId: "herroo",
+    storageBucket: "herroo.appspot.com",
+    messagingSenderId: "435793472033",
+    appId: "1:435793472033:web:e3ad604b7f5a1c44fcd160",
+    measurementId: "G-WN4E04H4N6"
+      };
+      firebase.initializeApp(firebaseConfig);
+      firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+      // User is signed in, you can access user.uid here
+      const currentUserUID = user.uid;
+      localStorage.setItem('currentUserUID', currentUserUID);
+    } else {
+      // No user is signed in.
+      console.log("No user is signed in.");
+    }
+  });
+  
+      const database = firebase.database();
+      const ordersRef = database.ref("orders");
+  
+      document.getElementById("Mainform").addEventListener("submit", function(event) {
+        event.preventDefault();
+  
+         // Lấy UID của người dùng từ local storage
+    const currentUserUID = localStorage.getItem('currentUserUID');
+  
+  // Kiểm tra xem UID có tồn tại không
+  if (!currentUserUID) {
+    alert("Không tìm thấy UID của người dùng. Vui lòng đăng nhập để gửi đơn hàng.");
+    return;
+  }       
+        const customerName = document.getElementById("customerName").value;
+        const phoneNumber = document.getElementById("phoneNumber").value;
+        const address = document.getElementById("inputAddressB").value;
+        const productName = document.getElementById("productName").value;
+  
+        // const productImage = document.getElementById("productImage").value; // Thường sẽ lưu URL hình ảnh
+  
+        const productImageInput = document.getElementById("productImage");
+        const file = productImageInput.files[0]; // Lấy ra file từ input type file
+        
+        const shippingFeeDisplay = document.getElementById("shippingFeeDisplay").textContent; // Lấy giá trị từ thẻ span có id là "shippingFeeDisplay"
+        const productPrice = document.getElementById("productPrice").value;
+        const productQuantity = document.getElementById("productQuantity").value;
+        const productWeight = document.getElementById("productWeight").value;
+        const shippingFeeType = document.getElementById("shippingFeeType").value;
+        const codFee = document.getElementById("codFee").value;
+        const currentUser = firebase.auth().currentUser;
+        const orderData = {
+         
+          customerName: customerName,
+          phoneNumber: phoneNumber,
+          address: address, 
+          shippingFee: shippingFeeDisplay,
+          productName: productName,
+          productImage: productImage,
+          productPrice: productPrice,
+          productQuantity: productQuantity,
+          productWeight: productWeight,
+          shippingFeeType: shippingFeeType,
+          codFee: codFee,
+          userID: currentUser.uid
+          
+        };
+        orderData.created_at = firebase.database.ServerValue.TIMESTAMP;
+        // Tạo reference đến thư mục bạn muốn lưu trữ hình ảnh trên Firebase Storage
+        const storageRef = firebase.storage().ref('images/' + file.name)
+        // Upload hình ảnh lên Firebase Storage
+         const uploadTask = storageRef.put(file);
+  
+         uploadTask.then((snapshot) => {
+  // Nếu upload thành công, lấy đường dẫn URL của hình ảnh từ Firebase Storage
+  snapshot.ref.getDownloadURL().then((downloadURL) => {
+    // Lưu đường dẫn URL của hình ảnh vào dữ liệu đơn hàng
+    orderData.productImage = downloadURL; // Lưu đường dẫn URL hình ảnh
+
+    // Đẩy thông tin đơn hàng (bao gồm cả thời gian tạo) lên Firebase Database
+    ordersRef.push(orderData)
+      .then(() => {
+        console.log("Đã gửi đơn hàng thành công");
+        alert("Gửi đơn hàng thành công");
+      })
+      .catch((error) => {
+        console.error("Lỗi khi gửi đơn hàng:", error);
+        alert("Gửi đơn hàng không thành công");
+      });
+  });
+}).catch((error) => {
+  console.error("Lỗi khi upload hình ảnh:", error);
+  alert("Đã xảy ra lỗi khi upload hình ảnh");
+});
+  });
+    </script>
+
+
+<!-- // functionMAP -->
+       <!-- Tải Leaflet Control Geocoder -->
+    <script src="https://unpkg.com/leaflet-control-geocoder@1.13.0/dist/Control.Geocoder.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder@1.13.0/dist/Control.Geocoder.css" />
+<script>
+  // Lấy đối tượng geocoder từ Leaflet
+  const geocoder = L.Control.Geocoder.nominatim();
+        let markerA = null;
+          let markerB = null;
+        let routeControl = null;
+  
+  
+        function updateShippingFee(shippingFee) {
+            const formattedShippingFee = formatCurrency(shippingFee);
+            const shippingFeeDisplay = document.getElementById("shippingFeeDisplay");
+            shippingFeeDisplay.textContent = formattedShippingFee;
+            // Cập nhật dữ liệu chi phí vận chuyển trong đơn hàng
+    orderData.shippingFee = shippingFee;
+        }
+
+        function formatCurrency(amount) {
+            const currencyFormat = new Intl.NumberFormat('vi-VN', {
+                style: 'currency',
+                currency: 'VND'
+            });
+            return currencyFormat.format(amount);
+            // Gọi hàm cập nhật phí vận chuyển
+            updateShippingFee(shippingFee);
+        }
+
+function calculateDistanceAndShippingFee(latitudeA, longitudeA, latitudeB, longitudeB) {
+    const R = 6371; // Bán kính Trái Đất trong km
+    const dLat = (latitudeB - latitudeA) * (Math.PI / 180);
+    const dLon = (longitudeB - longitudeA) * (Math.PI / 180);
+    const a =
+        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos(latitudeA * (Math.PI / 180)) * Math.cos(latitudeB * (Math.PI / 180)) *
+        Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    const distanceInKm = R * c;
+
+    let shippingFee;
+
+    if (distanceInKm <= 10) {
+        shippingFee = 25000; // Phí dưới 10km là 25,000 VND
+    } else {
+        const extraDistance = distanceInKm - 10;
+        const extraFee = Math.ceil(extraDistance / 5) * 1000; // Tính phí cho mỗi 5km tiếp theo (3,000 VND)
+        shippingFee = 25000 + extraFee;
+    }
+    // Hiển thị phí vận chuyển
+    updateShippingFee(shippingFee);
+}
+
+  </script>
+   <script>
+   
+   document.getElementById("calculateRouteButton").addEventListener("click", function(event) {
+    event.preventDefault();
+
+    const addressA = document.getElementById("inputAddressA").value;
+    const addressB = document.getElementById("inputAddressB").value;
+
+    if (markerA !== null) {
+        map.removeLayer(markerA);
+    }
+
+    if (markerB !== null) {
+        map.removeLayer(markerB);
+    }
+
+    if (routeControl !== null) {
+        map.removeControl(routeControl);
+    }
+
+    fetch('https://nominatim.openstreetmap.org/search?format=json&q=' + encodeURIComponent(addressA))
+        .then(response => response.json())
+        .then(data => {
+            if (data && data.length > 0) {
+                const latitudeA = data[0].lat;
+                const longitudeA = data[0].lon;
+
+                markerA = L.marker([latitudeA, longitudeA]).addTo(map)
+                    .bindPopup('Điểm A')
+                    .openPopup();
+
+                fetch('https://nominatim.openstreetmap.org/search?format=json&q=' + encodeURIComponent(addressB))
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data && data.length > 0) {
+                            const latitudeB = data[0].lat;
+                            const longitudeB = data[0].lon;
+
+                            markerB = L.marker([latitudeB, longitudeB]).addTo(map)
+                                .bindPopup('Điểm B')
+                                .openPopup();
+
+                            routeControl = L.Routing.control({
+                                waypoints: [
+                                    L.latLng(latitudeA, longitudeA),
+                                    L.latLng(latitudeB, longitudeB)
+                                ],
+                                routeWhileDragging: true
+                            }).addTo(map);
+
+                            map.setView([latitudeA, longitudeA], 12);
+
+                            // Khi đã có tọa độ A và B, tính toán và cập nhật phí vận chuyển
+                            calculateDistanceAndShippingFee(latitudeA, longitudeA, latitudeB, longitudeB);
+                        } else {
+                            console.error('Không tìm thấy dữ liệu tọa độ cho địa chỉ B.');
+                            alert('Không tìm thấy địa chỉ B.');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Lỗi khi tìm kiếm địa chỉ B:', error);
+                        alert('Không thể tìm thấy địa chỉ B.');
+                    });
+
+            } else {
+                console.error('Không tìm thấy dữ liệu tọa độ cho địa chỉ A.');
+                alert('Không tìm thấy địa chỉ A.');
+            }
+        })
+        .catch(error => {
+            console.error('Lỗi khi tìm kiếm địa chỉ A:', error);
+            alert('Không thể tìm thấy địa chỉ A.');
+        });
+});
+
+const map = L.map('map').setView([10.8231, 106.6297], 13);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap contributors'
+}).addTo(map);
+
+function isWithinHCM(latitude, longitude) {
+        // Kiểm tra và cập nhật phí vận chuyển nếu cần
+        // ...
+    }
+
+  </script>
+
+
+<script>// Lấy tham chiếu đến phần tử bản đồ
+  const mapElement = document.getElementById('map');
+  
+  // Lấy tham chiếu đến nút hoặc phần tử điều khiển
+  const fullscreenButton = document.getElementById('toggleFullscreen');
+  
+
+  // Hàm thực hiện chuyển đổi full màn hình
+  function toggleFullscreen() {
+    if (!document.fullscreenElement) {
+      mapElement.requestFullscreen().catch(err => {
+        alert(`Error attempting to enable full-screen mode: ${err.message}`);
+      });
+   
+    } else {
+      document.exitFullscreen();
+      fullscreenButton.textContent = 'Màn hình đầy đủ';
+    }
+  }
+  
+  // Lắng nghe sự kiện nhấn nút hoặc phần tử điều khiển
+  fullscreenButton.addEventListener('click', toggleFullscreen);</script>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Roboto', -apple-system, 'Helvetica Neue', 'Segoe UI', Arial, sans-serif;
+        }
+        #map {
+            height: 400px;
+            width: 100%;
+        }
+
+        form {
+            width: 70%;
+            margin: 0 auto;
+            background-color: #f8f9fa; /* Màu nền của form */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Đổ bóng form */
+        }
+
+        label {
+            margin-top: 10px;
+            display: block;
+        }
+
+        input, select, button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            border: 1px solid #ced4da; /* Màu đường viền của input và select */
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #28a745; /* Màu nền của nút Gửi đơn hàng */
+            color: #fff; /* Màu chữ của nút Gửi đơn hàng */
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #218838; /* Màu nền khi di chuột qua nút Gửi đơn hàng */
+        }
+
+        /* Tùy chỉnh style cho nút Tính đường đi */
+        #calculateRouteButton {
+            background-color: #007bff; /* Màu nền của nút Tính đường đi */
+            color: #fff; /* Màu chữ của nút Tính đường đi */
+        }
+
+        #calculateRouteButton:hover {
+            background-color: #0056b3; /* Màu nền khi di chuột qua nút Tính đường đi */
+        }
+    </style>
+</div>
+
+  <!--gallery-->
+  <section class="section section-gallery">
+    <div class="">
+      <div class="hot_sp" style="padding-top: 70px;padding-bottom: 50px;">
+        <h2 style="text-align:center;padding-top: 10px">
+          <a style="font-size: 28px;color: black;text-decoration: none" href="">Khách hàng và Giao Hàng Tiết Kiệm</a>
+          </h2>
+        </div>
+        <div class="list-gallery clearfix">
+          <ul class="shoes-gp">
+            <li>
+              <div class="gallery_item">
+                <img class="img-resize" src="images/0.2 (1).jpg" alt="">
+              </div>
+            </li>
+            <li>
+              <div class="gallery_item">
+                <img class="img-resize" src="images/0.3 (1).png" alt="">
+              </div>
+            </li>
+            <li>
+              <div class="gallery_item">
+                <img class="img-resize" src="images/0.4 (1).png" alt="">
+              </div>
+            </li>
+            <li>
+              <div class="gallery_item">
+                <img class="img-resize" src="images/0.5 (1).png" alt="">
+              </div>
+            </li>
+            <li>
+              <div class="gallery_item">
+                <img class="img-resize" src="images/0.7 (1).png" alt="">
+              </div>
+            </li>
+            <li>
+              <div class="gallery_item">
+                <img class="img-resize" src="images/10 (1).png" alt="">
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    <footer class="main-footer">
+      <div class="container">
+        <div class="">
+          <div class="row">
+            <div class="col-xs-12 col-sm-6 col-md-3">
+              <div class="footer-col footer-block">
+                <h4 class="footer-title">
+                  Giới thiệu
+                </h4>
+                <div class="footer-content">
+                  <p>Giao hàng tiết kiệm, đảm bảo nhanh chóng và an toàn - sự lựa chọn hoàn hảo cho nhu cầu vận chuyển của bạn!</p>
+                  <div class="logo-footer">
+                    <img src="images/logo-bct.png" alt="Bộ Công Thương">
+                  </div>
+                  <div class="social-list">
+                    <a href="#" class="fab fa-facebook"></a>
+                    <a href="#" class="fab fa-google"></a>
+                    <a href="#" class="fab fa-twitter"></a>
+                    <a href="#" class="fab fa-youtube"></a>
+                    <a href="#" class="fab fa-skype"></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-3">
+              <div class="footer-col footer-link">
+                <h4 class="footer-title">
+                  PHÁP LÝ &amp; CÂU HỎI
+                </h4>
+                <div class="footer-content toggle-footer">
+                  <ul>
+                    <li class="item">
+                      <a href="#" title="Tìm kiếm">Tìm kiếm</a>
+                    </li>
+                    <li class="item">
+                      <a href="#" title="Giới thiệu">Giới thiệu</a>
+                    </li>
+                    <li class="item">
+                      <a href="#" title="Chính sách đổi trả">Chính sách đổi trả</a>
+                    </li>
+                    <li class="item">
+                      <a href="#" title="Chính sách bảo mật">Chính sách bảo mật</a>
+                    </li>
+                    <li class="item">
+                      <a href="#" title="Điều khoản dịch vụ">Điều khoản dịch vụ</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-3">
+              <div class="footer-col footer-block">
+                <h4 class="footer-title">
+                  Thông tin liên hệ
+                </h4>
+                <div class="footer-content toggle-footer">
+                  <ul>
+                    <li><span>Địa chỉ:</span> 475A Đ. Điện Biên Phủ, Phường 25, Bình Thạnh, Thành phố Hồ Chí Minh</li>
+                    <li><span>Điện thoại:</span> +84 (098) 8266052</li>
+                    <li><span>Fax:</span> +84 (098) 8266052</li>
+                    <li><span>Mail:</span> ankhseram1412@gmail.com</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-3">
+              <div class="footer-col footer-block">
+                <h4 class="footer-title">
+                  FANPAGE
+                </h4>
+                <div class="footer-content">
+                  <div id="fb-root">
+                    <div class="footer-static-content">
+                      <div class="fb-page" data-href="https://www.facebook.com/profile.php?id=100055988582904"
+                        data-tabs="timeline" data-width="" data-height="215" data-small-header="false"
+                        data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true">
+                        <blockquote cite="https://www.facebook.com/profile.php?id=100055988582904"
+                          class="fb-xfbml-parse-ignore"><a
+                            href="https://www.facebook.com/profile.php?id=100055988582904">GHTK Việt Nam</a>
+                        </blockquote>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="main-footer--copyright">
+        <div class="container">
+          <hr>
+          <div class="main-footer--border" style="text-align:center;padding-bottom: 15px;">
+            <p><a href="https://www.facebook.com/profile.php?id=100055988582904"> GHTK Việt Nam</a>. <a target="_blank"
+                href="https://www.facebook.com/profile.php?id=100055988582904">Facebook</a></p>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+ 
+  <script async defer crossorigin="anonymous" src="plugins/sdk.js"></script>
+  <script src="plugins/jquery-3.4.1/jquery-3.4.1.min.js"></script>
+  <script src="plugins/bootstrap/popper.min.js"></script>
+  <script src="plugins/bootstrap/bootstrap.min.js"></script>
+  <script src="plugins/owl.carousel/owl.carousel.min.js"></script>
+  <script src="js/home.js"></script>
+  <script src="js/script.js"></script>
+  <script src="plugins/uikit/uikit.min.js"></script>
+  <script src="plugins/uikit/uikit-icons.min.js"></script>
+  <script src="js/sign.js"></script>
+</body>
+
+</html>

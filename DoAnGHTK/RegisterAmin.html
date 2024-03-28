@@ -1,0 +1,226 @@
+<!-- Các phần tử form được đặt trong thẻ form -->
+<style>#Mainform {
+    width: 300px;
+    margin: 50px auto;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    background-color: #f4f4f4;
+  }
+
+  #Mainform h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+  }
+
+  .form-floating {
+    position: relative;
+    margin-bottom: 20px;
+  }
+
+  .form-floating input {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-sizing: border-box;
+    background-color: #eee;
+  }
+
+  .form-floating label {
+    position: absolute;
+    top: 50%;
+    left: 12px;
+    transform: translateY(-50%);
+    pointer-events: none;
+    transition: top 0.3s, font-size 0.3s, color 0.3s;
+    color: #555;
+  }
+
+  .form-floating input:focus + label,
+  .form-floating input:not(:placeholder-shown) + label {
+    top: 0;
+    font-size: 12px;
+    color: #28a745;
+  }
+
+  .btn {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-weight: bold;
+  }
+
+  .btn-success {
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+  }
+
+  .btn-dark {
+    background-color: #343a40;
+    color: #fff;
+    border: none;
+  }
+
+  .btn:hover {
+    opacity: 0.8;
+  }
+
+  .btn:active {
+    transform: scale(0.98);
+  }
+   #Mainform {
+    width: 300px;
+    margin: 50px auto;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    background-color: #8a2be2; /* Màu tím */
+  }
+  body {
+    background-color: #8a2be2; /* Màu tím */
+    margin: 0; /* Đặt margin về 0 để loại bỏ khoảng trống xung quanh */
+    padding: 0; /* Đặt padding về 0 để loại bỏ khoảng trống bên trong */
+  }
+
+  /* Các quy tắc CSS khác của bạn */
+
+</style>
+<form id="Mainform" class="w-25 m-4">
+    <h2>Register Admin</h2>
+    <div class="form-floating mb-3">
+      <input type="email" class="form-control" id="emailIpn" placeholder="name@example.com">
+      <label for="floatingInput"></label>
+    </div>
+    <div class="form-floating mb-3">
+      <input type="password" class="form-control" id="passwordIpn" placeholder="Password">
+      <label for="floatingPassword"></label>
+    </div>
+  
+    <div class="form-floating mb-3">
+      <input type="password" class="form-control" id="RepasswordIpn" placeholder="RePassword">
+      <label for="floatingPassword"></label>
+    </div>
+  
+    <div class="form-floating mb-3">
+      <input type="number" class="form-control" id="number" placeholder="Phone">
+      <label for="floatingPassword"></label>
+    </div>
+  
+    <div class="form-floating mb-3">
+      <input type="text" class="form-control" id="FirstName" placeholder="First Name">
+      <label for="floatingInput"></label>
+    </div>
+    <div class="form-floating mb-3">
+      <input type="text" class="form-control" id="LastName" placeholder="Last Name">
+      <label for="floatingPassword"></label>
+    </div>
+    <!-- Nút submit trong form -->
+    <button type="submit" class="btn btn-success" style="float: right;">Create New User</button> <br> <br>
+    <a href="LoginAdmin.html" style="float: right;">
+      <button type="button" class="btn btn-dark me-2">Sign in</button>
+    </a>
+  </form>
+  
+  <script>
+  
+    
+   // Lấy tham chiếu tới các ô nhập mật khẩu
+  const passwordInput = document.getElementById('passwordIpn');
+  const repasswordInput = document.getElementById('RepasswordIpn');
+  
+  // Thêm sự kiện 'input' để kiểm tra khi người dùng nhập liệu
+  repasswordInput.addEventListener('input', function() {
+      const password = passwordInput.value;
+      const repassword = repasswordInput.value;
+  
+      // Biểu thức chính quy kiểm tra mật khẩu theo các điều kiện
+      const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[a-z]).{8,}$/;
+  
+      if (password !== repassword) {
+          // Nếu mật khẩu không khớp, hiển thị thông báo
+          repasswordInput.setCustomValidity('Mật khẩu không khớp');
+      } else if (!passwordRegex.test(password)) {
+          // Nếu mật khẩu không đáp ứng các yêu cầu, hiển thị thông báo
+          repasswordInput.setCustomValidity('Mật khẩu phải có ít nhất 8 ký tự, bao gồm : chữ hoa, chữ thường và số');
+      } else {
+          // Nếu mật khẩu đáp ứng yêu cầu, xóa thông báo
+          repasswordInput.setCustomValidity('');
+      }
+  });
+  
+  </script>
+  <script type="module">
+    // Import các thư viện Firebase
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-app.js";
+    import { getDatabase, get, ref, set} from "https://www.gstatic.com/firebasejs/10.6.0/firebase-database.js";
+    import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-auth.js";
+    
+  
+    const firebaseConfig = {
+      apiKey: "AIzaSyAD3paI--G69OCHeEGD_UrBoM806pF04WA",
+      authDomain: "herroo.firebaseapp.com",
+      databaseURL: "https://herroo-default-rtdb.firebaseio.com",
+      projectId: "herroo",
+      storageBucket: "herroo.appspot.com",
+      messagingSenderId: "435793472033",
+      appId: "1:435793472033:web:e3ad604b7f5a1c44fcd160",
+      measurementId: "G-WN4E04H4N6"
+    };
+    // Khai báo cấu hình Firebase và khởi tạo ứng dụng
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+    const auth = getAuth(app);
+  
+    let Mainform = document.getElementById('Mainform');
+  
+    let RegisterUser = evt => {
+    evt.preventDefault();
+    let EmailIpn = document.getElementById('emailIpn').value;
+    let Password = document.getElementById('passwordIpn').value;
+    let FirstName = document.getElementById('FirstName').value;
+    let Phone = document.getElementById('number').value;
+    let LastName = document.getElementById('LastName').value;
+  
+    createUserWithEmailAndPassword(auth, EmailIpn, Password)
+      .then((userCredential) => {
+        const uid = userCredential.user.uid;
+  
+        const userData = {
+          firstName: FirstName,
+          lastName: LastName,
+          email: EmailIpn,
+          phone: Phone,
+          isAdmin: true // Đặt vai trò admin cho người dùng mới
+          // Các thông tin khác của người dùng nếu cần
+        };
+  
+        // Cập nhật thông tin người dùng vào Realtime Database
+        set(ref(db, 'Admin/' + uid), userData);
+        alert("Đăng ký thành công");
+  
+        // Reset form sau khi đăng ký thành công
+        Mainform.reset();
+        // Xóa giá trị trong các ô input sau khi đăng ký thành công
+        document.getElementById('emailIpn').value = '';
+        document.getElementById('passwordIpn').value = '';
+        document.getElementById('FirstName').value = '';
+        document.getElementById('number').value = '';
+        document.getElementById('LastName').value = '';
+      })
+      .catch((error) => {
+        console.error("Error creating user:", error);
+        alert("Tài khoản đã được đăng ký: " + error.message);
+      });
+  };
+  
+    Mainform.addEventListener('submit', RegisterUser);
+  </script>
+  

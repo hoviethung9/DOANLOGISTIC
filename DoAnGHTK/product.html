@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="plugins/bootstrap/bootstrap.min.css">
+
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+
+  <link rel="stylesheet" href="plugins/animate/animate.min.css">
+
+  <link rel="stylesheet" href="plugins/fontawesome/all.css">
+
+  <link href="plugins/webfonts/font.css"
+    rel="stylesheet">
+  <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
+  <link rel="stylesheet" href="css/owl.theme.default.min.css" type="text/css">
+
+  <!-- UIkit CSS -->
+  <link rel="stylesheet" href="plugins/uikit/uikit.min.css" />
+
+
+  <title>Tất cả sản phẩm</title>
+
+</head>
+
+<body>
+  
+  <!--Navbar-->
+  <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top">
+
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <img src="images/GHTK.png" class="logo-top" alt="">
+      </a>
+      <div class="desk-menu collapse navbar-collapse justify-content-md-center" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Trang Chủ</a>
+          </li>
+          
+          <li class="nav-item lisanpham">
+            <a class="nav-link" href="detailproduct.html">Lịch Sử</a>
+            
+          </li>
+          <li class="nav-item lisanpham">
+            <a class="nav-link" href="introduce.html">Thông Tin
+              <i class="fa fa-chevron-down" aria-hidden="true"></i>
+            </a>
+            <ul class="sub_menu">
+              <li class="">
+                <a href="introduce.html" title="Thông Tin Dịch Vụ">
+                  Thông Tin Dịch Vụ
+                </a>
+              </li>
+              <li class="">
+                <a href="product.html" title="Thông Tin Khách Hàng">
+                  Thông Tin Khách Hàng
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="blog.html">Đơn Hàng</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="contact.html">Liên Hệ</a>
+          </li>
+        </ul>
+      </div>
+      <div id="offcanvas-flip1" uk-offcanvas="flip: true; overlay: true">
+        <div class="uk-offcanvas-bar" style="background: white;
+        width: 100%;">
+
+          <button class="uk-offcanvas-close" style="color:#272727" type="button" uk-close></button>
+          <h3 style="font-size: 14px;
+          color: #272727;
+          text-transform: uppercase;
+          margin: 3px 0 30px 0;
+          font-weight: 500; letter-spacing: 2px;">MENU</h3>
+            <div class="justify-content-md-center">
+              <ul class="navbar-nav">
+                <li class="nav-item">
+                  <a class="nav-link" href="index.html">Trang Chủ/a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="product.html">Chưa Biết</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="Lichsudonhang.html">Lịch Sử</a>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle aaaa" href="#" id="navbarDropdown" role="button"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <p>Thông Tin</p>
+                    <i class="fa fa-angle-double-right"></i>
+  
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="border:0;">
+                    <a class="dropdown-item" href="introduce.html" title="Thông Tin Dịch Vụ">Thông Tin Dịch Vụ</a>
+                    <a class="dropdown-item" href="product.html" title="SThông Tin Khách Hàng">Thông Tin Khách Hàng</a>
+                  </div>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="blog.html">Đơn Hàng</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="contact.html">Liên Hệ</a>
+                </li>
+              </ul>
+            </div>
+
+        </div>
+      </div>
+
+  </nav>
+  <!--Banner-->
+  <div>
+    <div>
+      <img src="images/hinh0.1 (1).jpeg" alt="Products">
+    </div>
+  </div>
+  <!--List Prodct-->
+  <title>User Information</title>
+  <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-database-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
+
+
+<br><br>
+
+<body>
+
+  <form id="myForm">
+      <label for="emailIpn">Email</label>
+      <input type="text" name="emailIpn" id="emailIpn">
+      <br><br>
+  
+      <label for="FirstName">Họ</label>
+      <input type="text" name="FirstName" id="FirstName">
+      <br><br>
+  
+      <label for="LastName">Tên</label>
+      <input type="text" name="LastName" id="LastName">
+      <br><br>
+  
+      <label for="Phone">Số Điện Thoại</label>
+      <input type="text" name="Phone" id="Phone">
+      <br><br>
+  
+      <button id="Re"type= "button" >Hiển thị thông tin</button>
+      <button id="updateButto n" type= "button" class="update-button">Cập Nhật</button>
+      <a href="PageRepass.html">
+          <button type="button" class="change-password-button">Đổi Mật Khẩu</button>
+      </a>
+  </form>
+  
+  </body>
+  
+  <style>
+    /* Your existing styles */
+    body {
+        margin: 0;
+        font-family: 'Roboto', -apple-system, 'Helvetica Neue', 'Segoe UI', Arial, sans-serif;
+    }
+
+    #map {
+        height: 400px;
+        width: 100%;
+    }
+
+    form {
+        width: 70%;
+        margin: 0 auto;
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    label {
+        margin-top: 10px;
+        display: block;
+    }
+
+    input, select, button {
+        width: 100%;
+        padding: 10px;
+        margin-top: 5px;
+        margin-bottom: 15px;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    button {
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    #submitButton {
+        background-color: #28a745;
+        color: #fff;
+    }
+
+    #submitButton:hover {
+        background-color: #218838;
+    }
+
+    #Re {
+        background-color: #007bff;
+        color: #fff;
+    }
+
+    #Re:hover {
+        background-color: #0056b3;
+    }
+
+
+    .change-password-button {
+        /* Add your styles for the Change Password button here */
+        float: right;
+    }
+</style>
+
+
+
+  <!-- <button id="getDataButton">Get Data</button> -->
+
+  
+  <script type="module">
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+    apiKey: "AIzaSyAD3paI--G69OCHeEGD_UrBoM806pF04WA",
+    authDomain: "herroo.firebaseapp.com",
+    databaseURL: "https://herroo-default-rtdb.firebaseio.com",
+    projectId: "herroo",
+    storageBucket: "herroo.appspot.com",
+    messagingSenderId: "435793472033",
+    appId: "1:435793472033:web:e3ad604b7f5a1c44fcd160",
+    measurementId: "G-WN4E04H4N6"
+  };
+    // Initialize Firebase
+    const app = firebase.initializeApp(firebaseConfig);
+    const database = firebase.database();
+    firebase.auth().currentUser
+
+    let EmailIpn = document.getElementById('emailIpn');
+    let FirstNameIpn = document.getElementById('FirstName');
+    let LastNameIpn = document.getElementById('LastName');
+    let PhoneIpn = document.getElementById('Phone');
+
+    let ReBnt = document.getElementById('Re');
+
+    ReBnt.addEventListener('click', () => {
+      const user = firebase.auth().currentUser; // Lấy thông tin người dùng hiện tại
+      if (user) {
+        const uid = user.uid; // Lấy uid của người dùng hiện tại
+        const dbRef = database.ref('UsersAuthList/' + uid); // Sử dụng uid để truy cập thông tin người dùng
+        dbRef.once('value')
+          .then((snapshot) => {
+            const userData = snapshot.val();
+            if (userData) {
+              // Hiển thị thông tin người dùng
+              EmailIpn.value = userData.email;
+              FirstNameIpn.value = userData.firstName;
+              LastNameIpn.value = userData.lastName;
+              PhoneIpn.value = userData.phone;
+            } else {
+              alert("User data does not exist");
+            }
+          })
+          .catch((error) => {
+            alert("Unsuccessful");
+            console.log(error);
+          });
+      } else {
+        alert("No user logged in");
+      }
+    });
+
+
+
+    document.getElementById('updateButton').addEventListener('click', () => {
+  // Lấy thông tin người dùng từ các input
+  const updatedEmail = EmailIpn.value;
+  const updatedFirstName = FirstNameIpn.value;
+  const updatedLastName = LastNameIpn.value;
+  const updatedPhone = PhoneIpn.value;
+
+  // Kiểm tra xem người dùng đã đăng nhập hay chưa
+  const user = firebase.auth().currentUser;
+  if (user) {
+    // Lấy UID của người dùng
+    const uid = user.uid;
+
+    // Tạo object chứa thông tin người dùng cần cập nhật
+    const updatedUserData = {
+      email: updatedEmail,
+      firstName: updatedFirstName,
+      lastName: updatedLastName,
+      phone: updatedPhone
+    };
+
+    // Truy cập vào nút UsersAuthList/UID và cập nhật thông tin người dùng
+    firebase.database().ref('UsersAuthList/' + uid).update(updatedUserData)
+      .then(() => {
+        alert("Update successful");
+      })
+      .catch((error) => {
+        alert("Update failed");
+        console.error(error);
+      });
+  } else {
+    alert("No user logged in");
+  }
+
+
+  document.getElementById('changePasswordButton').addEventListener('click', () => {
+  const user = firebase.auth().currentUser;
+  if (user) {
+    // Lấy thông tin người dùng từ các input
+    const currentPassword = prompt("Enter your current password:");
+    const email = prompt("Enter your email:");
+    const phoneNumber = prompt("Enter your phone number:");
+
+    // Tạo một credential với email và password
+    const credential = firebase.auth.EmailAuthProvider.credential(email, currentPassword);
+
+    // Re-authenticate người dùng với credential để xác minh thông tin
+    user.reauthenticateWithCredential(credential)
+      .then(() => {
+        // Xác minh thành công, gửi thông tin đổi mật khẩu đến email của người dùng
+        user.updatePassword('NEW_PASSWORD_HERE')
+          .then(() => {
+            // Đổi mật khẩu thành công, thông báo và thực hiện các hành động khác nếu cần
+            alert("Password changed successfully. An email has been sent to your email address.");
+            // Gửi thông tin đổi mật khẩu đến email của người dùng
+          
+          })
+          .catch((error) => {
+            alert("Failed to change password. Please try again.");
+            console.error(error);
+          });
+      })
+      .catch((error) => {
+        alert("Failed to authenticate. Please check your current password, email, and phone number.");
+        console.error(error);
+      });
+  } else {
+    alert("No user logged in");
+  }
+});
+});
+
+
+// Đổi mk
+document.getElementById('changePasswordButton').addEventListener('click', () => {
+  const user = firebase.auth().currentUser;
+  if (user) {
+    // Lấy thông tin người dùng từ các input
+    const currentPassword = prompt("Enter your current password:");
+    const email = prompt("Enter your email:");
+    const phoneNumber = prompt("Enter your phone number:");
+
+    // Tạo một credential với email và password
+    const credential = firebase.auth.EmailAuthProvider.credential(email, currentPassword);
+
+    // Re-authenticate người dùng với credential để xác minh thông tin
+    user.reauthenticateWithCredential(credential)
+      .then(() => {
+        // Xác minh thành công, gửi thông tin đổi mật khẩu đến email của người dùng
+        user.updatePassword('NEW_PASSWORD_HERE')
+          .then(() => {
+            // Đổi mật khẩu thành công, thông báo và thực hiện các hành động khác nếu cần
+            alert("Password changed successfully. An email has been sent to your email address.");
+            // Gửi thông tin đổi mật khẩu đến email của người dùng
+            // Gửi email có chứa thông tin như email, số điện thoại để thông báo về sự thay đổi mật khẩu
+          })
+          .catch((error) => {
+            alert("Failed to change password. Please try again.");
+            console.error(error);
+          });
+      })
+      .catch((error) => {
+        alert("Failed to authenticate. Please check your current password, email, and phone number.");
+        console.error(error);
+      });
+  } else {
+    alert("No user logged in");
+  }
+});
+
+  </script>
+
+
+
+  <!--gallery-->
+  <section class="section section-gallery">
+    <div class="">
+      <div class="hot_sp" style="padding-top: 70px;padding-bottom: 50px;">
+        <h2 style="text-align:center;padding-top: 10px">
+          <a style="font-size: 28px;color: black;text-decoration: none" href="">Khách hàng và Giao Hàng Tiết Kiệm</a>
+          </h2>
+        </div>
+        <div class="list-gallery clearfix">
+          <ul class="shoes-gp">
+            <li>
+              <div class="gallery_item">
+                <img class="img-resize" src="images/0.2 (1).jpg" alt="">
+              </div>
+            </li>
+            <li>
+              <div class="gallery_item">
+                <img class="img-resize" src="images/0.3 (1).png" alt="">
+              </div>
+            </li>
+            <li>
+              <div class="gallery_item">
+                <img class="img-resize" src="images/0.4 (1).png" alt="">
+              </div>
+            </li>
+            <li>
+              <div class="gallery_item">
+                <img class="img-resize" src="images/0.5 (1).png" alt="">
+              </div>
+            </li>
+            <li>
+              <div class="gallery_item">
+                <img class="img-resize" src="images/0.7 (1).png" alt="">
+              </div>
+            </li>
+            <li>
+              <div class="gallery_item">
+                <img class="img-resize" src="images/10 (1).png" alt="">
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    <footer class="main-footer">
+      <div class="container">
+        <div class="">
+          <div class="row">
+            <div class="col-xs-12 col-sm-6 col-md-3">
+              <div class="footer-col footer-block">
+                <h4 class="footer-title">
+                  Giới thiệu
+                </h4>
+                <div class="footer-content">
+                  <p>Giao hàng tiết kiệm, đảm bảo nhanh chóng và an toàn - sự lựa chọn hoàn hảo cho nhu cầu vận chuyển của bạn!</p>
+                  <div class="logo-footer">
+                    <img src="images/logo-bct.png" alt="Bộ Công Thương">
+                  </div>
+                  <div class="social-list">
+                    <a href="#" class="fab fa-facebook"></a>
+                    <a href="#" class="fab fa-google"></a>
+                    <a href="#" class="fab fa-twitter"></a>
+                    <a href="#" class="fab fa-youtube"></a>
+                    <a href="#" class="fab fa-skype"></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-3">
+              <div class="footer-col footer-link">
+                <h4 class="footer-title">
+                  PHÁP LÝ &amp; CÂU HỎI
+                </h4>
+                <div class="footer-content toggle-footer">
+                  <ul>
+                    <li class="item">
+                      <a href="#" title="Tìm kiếm">Tìm kiếm</a>
+                    </li>
+                    <li class="item">
+                      <a href="#" title="Giới thiệu">Giới thiệu</a>
+                    </li>
+                    <li class="item">
+                      <a href="#" title="Chính sách đổi trả">Chính sách đổi trả</a>
+                    </li>
+                    <li class="item">
+                      <a href="#" title="Chính sách bảo mật">Chính sách bảo mật</a>
+                    </li>
+                    <li class="item">
+                      <a href="#" title="Điều khoản dịch vụ">Điều khoản dịch vụ</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-3">
+              <div class="footer-col footer-block">
+                <h4 class="footer-title">
+                  Thông tin liên hệ
+                </h4>
+                <div class="footer-content toggle-footer">
+                  <ul>
+                    <li><span>Địa chỉ:</span> 475A Đ. Điện Biên Phủ, Phường 25, Bình Thạnh, Thành phố Hồ Chí Minh</li>
+                    <li><span>Điện thoại:</span> +84 (098) 8266052</li>
+                    <li><span>Fax:</span> +84 (098) 8266052</li>
+                    <li><span>Mail:</span> ankhseram1412@gmail.com</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-3">
+              <div class="footer-col footer-block">
+                <h4 class="footer-title">
+                  FANPAGE
+                </h4>
+                <div class="footer-content">
+                  <div id="fb-root">
+                    <div class="footer-static-content">
+                      <div class="fb-page" data-href="https://www.facebook.com/profile.php?id=100055988582904"
+                        data-tabs="timeline" data-width="" data-height="215" data-small-header="false"
+                        data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true">
+                        <blockquote cite="https://www.facebook.com/profile.php?id=100055988582904"
+                          class="fb-xfbml-parse-ignore"><a
+                            href="https://www.facebook.com/profile.php?id=100055988582904">GHTK Việt Nam</a>
+                        </blockquote>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="main-footer--copyright">
+        <div class="container">
+          <hr>
+          <div class="main-footer--border" style="text-align:center;padding-bottom: 15px;">
+            <p> <a href="https://www.facebook.com/profile.php?id=100055988582904"> GHTK Việt Nam</a>. <a target="_blank"
+                href="https://www.facebook.com/profile.php?id=100055988582904">Facebook</a></p>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+ 
+  <script async defer crossorigin="anonymous" src="plugins/sdk.js"></script>
+  <script src="plugins/jquery-3.4.1/jquery-3.4.1.min.js"></script>
+  
+  <script src="plugins/bootstrap/popper.min.js"></script>
+  <script src="plugins/bootstrap/bootstrap.min.js"></script>
+  <script src="plugins/owl.carousel/owl.carousel.min.js"></script>
+  <script src="js/home.js"></script>
+  <script src="js/script.js"></script>
+  <script src="plugins/uikit/uikit.min.js"></script>
+  <script src="plugins/uikit/uikit-icons.min.js"></script>
+  <script src="js/sign.js"></script>
+</body>
+
+
+</html>

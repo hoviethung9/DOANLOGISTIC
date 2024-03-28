@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="stylesheet" href="plugins/bootstrap/bootstrap.min.css">
+
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+
+  <link rel="stylesheet" href="plugins/animate/animate.min.css">
+
+  <link rel="stylesheet" href="plugins/fontawesome/all.css">
+
+  <link href="plugins/webfonts/font.css"
+    rel="stylesheet">
+  <link rel="stylesheet" href="plugins/owl.carousel/owl.carousel.min.css" type="text/css">
+  <link rel="stylesheet" href="plugins/owl.carousel/owl.theme.default.min.css" type="text/css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+  <!-- UIkit CSS -->
+  <link rel="stylesheet" href="plugins/uikit/uikit.min.css" />
+
+
+  <title>Lịch sử đơn hàng</title>
+
+  <style>
+    /* CSS cho danh sách đơn hàng */
+#orderList {
+    list-style: none;
+    padding: 0;
+}
+
+#orders li {
+    margin-bottom: 20px;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+#orders li:hover {
+    transform: scale(1.02);
+}
+
+#orders li::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, #ff00cc, #3333ff);
+    z-index: -1;
+    transition: opacity 0.5s ease;
+    opacity: 0.6;
+}
+
+#orders li:hover::before {
+    opacity: 0.9;
+}
+
+#orders li button {
+    background-color: #fff;
+    color: #333;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    position: relative;
+    z-index: 1;
+}
+
+#orders li button:hover {
+    background-color: #eee;
+}
+
+  </style>
+</head>
+
+<body>
+  <!--Navbar-->
+
+  <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top">
+
+    
+      <a class="navbar-brand" href="index.html">
+        <img src="images/GHTK.png" class="logo-top" alt="">
+      </a>
+      <div class="desk-menu collapse navbar-collapse justify-content-md-center" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Trang Chủ</a>
+          </li>
+          <li class="nav-item active">
+              <a class="nav-link" href="Lichsudonhang.html">Lịch Sử</a>
+              
+            </li>
+            <li class="nav-item lisanpham">
+              <a class="nav-link" href="introduce.html">Thông Tin
+                <i class="fa fa-chevron-down" aria-hidden="true"></i>
+              </a>
+              <ul class="sub_menu ">
+                <li class="">
+                  <a href="introduce.html" title="Thông Tin Dịch Vụ">
+                    Thông Tin Dịch Vụ
+                  </a>
+                </li>
+                <li class="">
+                  <a href="product.html" title="Thông Tin Khách Hàng">
+                    Thông Tin Khách Hàng
+                  </a>
+                </li>
+              </ul>
+            </li>
+          <li class="nav-item">
+            <a class="nav-link" href="blog.html">Đơn Hàng</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="Contact.html">Liên Hệ</a>
+          </li>
+        </ul>
+      </div>
+      <div id="offcanvas-flip1" uk-offcanvas="flip: true; overlay: true">
+        <div class="uk-offcanvas-bar" style="background: white;
+        width: 350px;">
+
+          <button class="uk-offcanvas-close" style="color:#272727" type="button" uk-close></button>
+          <h3 style="font-size: 14px;
+                color: #272727;
+                text-transform: uppercase;
+                margin: 3px 0 30px 0;
+                font-weight: 500; letter-spacing: 2px;">MENU</h3>
+          <div class="justify-content-md-center">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link" href="index.html">Trang Chủ</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="Product.html">Chưa Biết</a>
+              </li>
+            
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle aaaa" href="#" id="navbarDropdown" role="button"
+                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <p>Thông Tin</p>
+                  <i class="fa fa-angle-double-right"></i>
+
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="border:0;">
+                  <a class="dropdown-item" href="Lichsudonhang.html" title="Thông Tin Dịch Vụ">Thông Tin Dịch Vụ</a>
+                  <a class="dropdown-item" href="product.html" title="SThông Tin Khách Hàng">Thông Tin Khách Hàng</a>
+                </div>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="blog.html">Đơn Hàng</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="Contact.html">Liên Hệ</a>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+  </nav>
+  <!--Banner-->
+  <div>
+    <div>
+      <img src="images/hinh0.3 (1).png" alt="Products">
+    </div>
+  </div>
+
+ <!-- Nội dung đơn hàng đã tạo -->
+ <h2>Đơn hàng đã tạo</h2>
+ <div id="orderList">
+   <ul id="orders">
+     <!-- Danh sách đơn hàng sẽ được hiển thị ở đây -->
+   </ul>
+ </div>
+ <div id="orderForm" style="display: none;">
+   <h2>Thông tin đơn hàng</h2>
+   <form id="editOrderForm">
+    <label for="orderStatus">Trạng thái đơn hàng:</label>
+    <input type="text" id="orderStatus" name="orderStatus" readonly> <!-- Thêm trường hiển thị trạng thái -->
+
+    <label for="orderId">ID Đơn hàng:</label><br>
+    <input type="text" id="orderId" name="orderId" readonly><br>
+     
+     <label for="customerName">Tên khách hàng:</label><br>
+     <input type="text" id="customerName" name="customerName" readonly><br>
+     
+     <label for="phoneNumber">Số điện thoại:</label><br>
+     <input type="text" id="phoneNumber" name="phoneNumber" readonly><br>
+     
+     <label for="address">Địa chỉ:</label><br>
+     <input type="text" id="address" name="address" readonly><br>
+     
+     <label for="productName">Tên sản phẩm:</label><br>
+     <input type="text" id="productName" name="productName" readonly><br>
+     
+     <img id="orderImage" src="" alt="Hình ảnh đơn hàng">
+     <div id="overlay"></div>
+
+     
+     <label for="productPrice">Giá sản phẩm:</label><br>
+     <input type="text" id="productPrice" name="productPrice" readonly><br>
+     
+     <label for="productQuantity">Số lượng:</label><br>
+     <input type="text" id="productQuantity" name="productQuantity" readonly><br>
+     
+     <label for="productWeight">Trọng lượng:</label><br>
+     <input type="text" id="productWeight" name="productWeight" readonly><br>
+     
+     <label for="shippingFeeType">Loại phí vận chuyển:</label><br>
+     <input type="text" id="shippingFeeType" name="shippingFeeType" readonly><br><br>
+     
+
+     <label for="shippingFee">Phí vận chuyển:</label><br>
+     <input type="text" id="shippingFee" name="shippingFee" readonly><br>
+     <button type="button" id="goBack">Quay về</button>
+   </form>
+ </div>
+
+ <style>
+  /* Các quy tắc CSS từ mã style trên */
+  body {
+      margin: 0;
+      font-family: 'Roboto', -apple-system, 'Helvetica Neue', 'Segoe UI', Arial, sans-serif;
+  }
+
+  #orderList,
+  #orderForm {
+      width: 70%;
+      margin: 0 auto;
+  }
+
+  h2 {
+      text-align: center;
+  }
+
+  form {
+      background-color: #f8f9fa;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+
+  label {
+      margin-top: 10px;
+      display: block;
+  }
+
+  input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      margin-bottom: 15px;
+      border: 1px solid #ced4da;
+      border-radius: 4px;
+      box-sizing: border-box;
+  }
+
+  img {
+      max-width: 100%;
+      height: auto;
+      margin-top: 10px;
+  }
+
+  #goBack {
+      background-color: #007bff;
+      color: #fff;
+      padding: 10px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+  }
+
+  #goBack:hover {
+      background-color: #0056b3;
+  }
+</style>
+  <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-database-compat.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
+          <script>
+             const firebaseConfig = {
+  apiKey: "AIzaSyAD3paI--G69OCHeEGD_UrBoM806pF04WA",
+  authDomain: "herroo.firebaseapp.com",
+  databaseURL: "https://herroo-default-rtdb.firebaseio.com",
+  projectId: "herroo",
+  storageBucket: "herroo.appspot.com",
+  messagingSenderId: "435793472033",
+  appId: "1:435793472033:web:e3ad604b7f5a1c44fcd160",
+  measurementId: "G-WN4E04H4N6"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const database = firebase.database();
+  
+
+    firebase.auth().onAuthStateChanged(function(user) {
+  if (user) {
+    const currentUserID = user.uid; // Lấy UID của người dùng hiện tại
+    console.log('Người dùng đã đăng nhập:', currentUserID);
+
+    displayOrdersByUser(currentUserID); // Truyền currentUserID vào hàm để hiển thị đơn hàng của người dùng
+  } else {
+    console.log('Người dùng chưa đăng nhập');
+    // Xử lý khi người dùng chưa đăng nhập
+  }
+});
+// ...
+function displayOrdersByUser(currentUserID) {
+  const ordersList = document.getElementById('orders');
+  ordersList.innerHTML = '';
+
+  database.ref('orders').once('value', (snapshot) => {
+    snapshot.forEach((childSnapshot) => {
+      const order = childSnapshot.val();
+      // Kiểm tra xem đơn hàng có thông tin cần thiết không
+      if (order.userID === currentUserID && order.productName && order.productPrice) {
+        const listItem = document.createElement('li');
+        
+      // Chuyển đổi timestamp sang dạng ngày tháng
+const orderDate = new Date(order.created_at); // Tạo đối tượng Date từ timestamp
+const formattedDate = orderDate.toLocaleString(); // Định dạng ngày tháng
+
+listItem.textContent = `Đơn hàng ${childSnapshot.key} - Ngày tạo: ${formattedDate}`;
+
+     
+
+        const showbutton = document.createElement('button');
+        showbutton.textContent = 'Xem thông tin đơn hàng';
+        showbutton.onclick = () => editOrder(childSnapshot.key);
+        listItem.appendChild(showbutton);
+        ordersList.appendChild(listItem);
+      }
+    });
+  });
+}
+// ...
+
+    // Hiển thị form chỉnh sửa đơn hàng
+    function editOrder(orderId) {
+      database.ref(`orders/${orderId}`).once('value', (snapshot) => {
+        const order = snapshot.val();
+        if (order) {
+          // Thêm trường hiển thị trạng thái đơn hàng
+         // Thay orderStatus bằng trường dữ liệu thực tế trong đơn hàng của bạn
+          document.getElementById('orderStatus').value = order.status;
+          document.getElementById('shippingFee').value = order.shippingFee;
+          document.getElementById('orderId').value = orderId;
+          document.getElementById('customerName').value = order.customerName;
+          document.getElementById('phoneNumber').value = order.phoneNumber;
+          document.getElementById('address').value = order.address;
+          document.getElementById('productName').value = order.productName;
+          document.getElementById('productPrice').value = order.productPrice;
+          document.getElementById('productQuantity').value = order.productQuantity;
+          document.getElementById('productWeight').value = order.productWeight;
+          document.getElementById('shippingFeeType').value = order.shippingFeeType;
+          document.getElementById('orderList').style.display = 'none';
+          document.getElementById('orderForm').style.display = 'block';
+
+                  // Cập nhật đường dẫn URL hình ảnh vào thẻ <img>
+                  const orderImage = document.getElementById('orderImage');
+                  orderImage.src = order.productImage; // Đường dẫn URL hình ảnh từ dữ liệu Firebase
+                  orderImage.width = 200; // Độ rộng mong muốn (ví dụ 200px)
+                  orderImage.height = 150; // Độ cao mong muốn (ví dụ 150px)
+                   // Hiển thị ngày tạo đơn hàng
+                  const createdDateElement = document.getElementById('createdDate');
+                   // Chuyển đổi timestamp sang dạng ngày tháng
+                   const orderDate = new Date(order.created_at); // Tạo đối tượng Date từ timestamp
+                   const formattedDate = orderDate.toLocaleString(); // Định dạng ngày tháng
+
+                   const formattedCreatedDate = formattedDate; // Gán giá trị của formattedDate vào formattedCreatedDate
+
+
+          document.getElementById('goBack').addEventListener('click', function() {
+  // Ẩn form chỉnh sửa đơn hàng
+  document.getElementById('orderForm').style.display = 'none';
+  // Hiển thị danh sách đơn hàng
+  document.getElementById('orderList').style.display = 'block';
+});  
+        }
+      }); 
+    }
+    displayOrdersByUser();
+          </script>
+
+          <script>
+            document.addEventListener('DOMContentLoaded', function() {
+              const navLinks = document.querySelectorAll('.nav-link');
+              const listItems = document.querySelectorAll('#listItems .list-group-item');
+          
+              navLinks.forEach(function(navLink) {
+                navLink.addEventListener('click', function(event) {
+                  event.preventDefault();
+          
+                  const target = this.getAttribute('href').substring(1); // Lấy id của layout
+          
+                  const layouts = document.querySelectorAll('.right-side > div');
+                  layouts.forEach(function(layout) {
+                    layout.style.display = 'none'; // Ẩn tất cả các layout
+                  });
+          
+                  const targetLayout = document.getElementById(target);
+                  if (targetLayout) {
+                    targetLayout.style.display = 'block'; // Hiển thị layout tương ứng với mục navbar được click
+                  }
+                });
+              });
+        
+              listItems.forEach(function(item) {
+                item.addEventListener('click', function() {
+                  const targetId = this.textContent.trim().toLowerCase().replace(/\s+/g, '');
+                  const layouts = document.querySelectorAll('.right-side > div');
+          
+                  layouts.forEach(function(layout) {
+                    layout.style.display = 'none';
+                  });
+          
+                  const targetLayout = document.getElementById(targetId);
+                  if (targetLayout) {
+                    targetLayout.style.display = 'block';
+                  }
+                });
+              });
+            });
+          </script>
+  </section>
+  <!--gallery-->
+  <section class="section section-gallery">
+    <div class="">
+      <div class="hot_sp" style="padding-top: 70px;padding-bottom: 50px;">
+        <h2 style="text-align:center;padding-top: 10px">
+          <a style="font-size: 28px;color: black;text-decoration: none" href="">Khách hàng và Giao Hàng Tiết Kiệm</a>
+          </h2>
+        </div>
+        <div class="list-gallery clearfix">
+          <ul class="shoes-gp">
+            <li>
+              <div class="gallery_item">
+                <img class="img-resize" src="images/0.2 (1).jpg" alt="">
+              </div>
+            </li>
+            <li>
+              <div class="gallery_item">
+                <img class="img-resize" src="images/0.3 (1).png" alt="">
+              </div>
+            </li>
+            <li>
+              <div class="gallery_item">
+                <img class="img-resize" src="images/0.4 (1).png" alt="">
+              </div>
+            </li>
+            <li>
+              <div class="gallery_item">
+                <img class="img-resize" src="images/0.5 (1).png" alt="">
+              </div>
+            </li>
+            <li>
+              <div class="gallery_item">
+                <img class="img-resize" src="images/0.7 (1).png" alt="">
+              </div>
+            </li>
+            <li>
+              <div class="gallery_item">
+                <img class="img-resize" src="images/10 (1).png" alt="">
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    <footer class="main-footer">
+      <div class="container">
+        <div class="">
+          <div class="row">
+            <div class="col-xs-12 col-sm-6 col-md-3">
+              <div class="footer-col footer-block">
+                <h4 class="footer-title">
+                  Giới thiệu
+                </h4>
+                <div class="footer-content">
+                  <p>Giao hàng tiết kiệm, đảm bảo nhanh chóng và an toàn - sự lựa chọn hoàn hảo cho nhu cầu vận chuyển của bạn!</p>
+                  <div class="logo-footer">
+                    <img src="images/logo-bct.png" alt="Bộ Công Thương">
+                  </div>
+                  <div class="social-list">
+                    <a href="#" class="fab fa-facebook"></a>
+                    <a href="#" class="fab fa-google"></a>
+                    <a href="#" class="fab fa-twitter"></a>
+                    <a href="#" class="fab fa-youtube"></a>
+                    <a href="#" class="fab fa-skype"></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-3">
+              <div class="footer-col footer-link">
+                <h4 class="footer-title">
+                  PHÁP LÝ &amp; CÂU HỎI
+                </h4>
+                <div class="footer-content toggle-footer">
+                  <ul>
+                    <li class="item">
+                      <a href="#" title="Tìm kiếm">Tìm kiếm</a>
+                    </li>
+                    <li class="item">
+                      <a href="#" title="Giới thiệu">Giới thiệu</a>
+                    </li>
+                    <li class="item">
+                      <a href="#" title="Chính sách đổi trả">Chính sách đổi trả</a>
+                    </li>
+                    <li class="item">
+                      <a href="#" title="Chính sách bảo mật">Chính sách bảo mật</a>
+                    </li>
+                    <li class="item">
+                      <a href="#" title="Điều khoản dịch vụ">Điều khoản dịch vụ</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-3">
+              <div class="footer-col footer-block">
+                <h4 class="footer-title">
+                  Thông tin liên hệ
+                </h4>
+                <div class="footer-content toggle-footer">
+                  <ul>
+                    <li><span>Địa chỉ:</span> 475A Đ. Điện Biên Phủ, Phường 25, Bình Thạnh, Thành phố Hồ Chí Minh</li>
+                    <li><span>Điện thoại:</span> +84 (098) 8266052</li>
+                    <li><span>Fax:</span> +84 (098) 8266052</li>
+                    <li><span>Mail:</span> ankhseram1412@gmail.com</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-3">
+              <div class="footer-col footer-block">
+                <h4 class="footer-title">
+                  FANPAGE
+                </h4>
+                <div class="footer-content">
+                  <div id="fb-root">
+                    <div class="footer-static-content">
+                      <div class="fb-page" data-href="https://www.facebook.com/profile.php?id=100055988582904"
+                        data-tabs="timeline" data-width="" data-height="215" data-small-header="false"
+                        data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true">
+                        <blockquote cite="https://www.facebook.com/profile.php?id=100055988582904"
+                          class="fb-xfbml-parse-ignore"><a
+                            href="https://www.facebook.com/profile.php?id=100055988582904">GHTK Việt Nam</a>
+                        </blockquote>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="main-footer--copyright">
+        <div class="container">
+          <hr>
+          <div class="main-footer--border" style="text-align:center;padding-bottom: 15px;">
+            <p> <a href="https://www.facebook.com/profile.php?id=100055988582904"> GHTK Việt Nam</a>. <a target="_blank"
+                href="https://www.facebook.com/profile.php?id=100055988582904">Facebook</a></p>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+ 
+  <script async defer crossorigin="anonymous" src="plugins/sdk.js"></script>
+  <script src="plugins/jquery-3.4.1/jquery-3.4.1.min.js"></script>
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
+  <script src="plugins/bootstrap/popper.min.js"></script>
+  <script src="plugins/bootstrap/bootstrap.min.js"></script>
+  <script src="plugins/owl.carousel/owl.carousel.min.js"></script>
+  <script src="js/home.js"></script>
+  <script src="js/script.js"></script>
+  <script src="plugins/uikit/uikit.min.js"></script>
+  <script src="plugins/uikit/uikit-icons.min.js"></script>
+  <script src="js/sign.js"></script>
+ 
+</body>
+
+</html>
